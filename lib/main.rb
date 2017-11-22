@@ -6,7 +6,7 @@ class Game
   attr_accessor :board, :presenter_board
 
   def initialize
-    @board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
+    @board = [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0]
   end
   
   def print_board
@@ -16,6 +16,16 @@ class Game
 
   def game_over?
     @board.slice(0, 6).inject(&:+) == 0 || @board.slice(7, 14).inject(&:+) == 0
+  end
+
+  def who_won?
+    if @board[7] == @board[-1]
+      puts "TIE!"
+    elsif @board[7] > @board[-1]
+      puts "YOU WON!"
+    else
+      puts "YOU LOST!"
+    end
   end
 
   def move_pieces(player)
@@ -48,11 +58,16 @@ puts INTRO_SCRIPT
 g = Game.new
 puts "starting board: #{g.print_board}"
 loop do
-  g.move_pieces("1")
-  puts g.print_board
-  g.move_pieces("2")
-  puts g.print_board
   if g.game_over?
+    g.who_won?
     break
   end
+  g.move_pieces("1")
+  puts g.print_board
+  if g.game_over?
+    g.who_won?
+    break
+  end
+  g.move_pieces("2")
+  puts g.print_board
 end
