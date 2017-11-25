@@ -8,7 +8,7 @@ class Player
     @type = type
   end
   
-  def person?
+  def human?
     @type == 'human'
   end
 
@@ -46,7 +46,7 @@ class Game
   end
 
   def move_pieces(player)
-    place = player.person? ? gets.chomp.to_i - 1 : rand(7..12)
+    place = player.human? ? gets.chomp.to_i - 1 : rand(7..12)
     pebbles = @board[place]
     if pebbles == 0 || !place.is_a?(Numeric)
       puts "try again"
@@ -57,13 +57,13 @@ class Game
     place = 0 if place == 13
     while pebbles > 0
       if player.robot? && place == 6 then place = place == 13 ? 0 : place + 1; next end
-      if player.person? && place == 13 then place = place == 13 ? 0 : place + 1; next end
+      if player.human? && place == 13 then place = place == 13 ? 0 : place + 1; next end
       pebbles -= 1
       @board[place] += 1
       place = place == 13 ? 0 : place + 1
     end
     puts "place: #{place}, player: #{player}"
-    if player.person? && place == 7 || player.robot? && place == 13
+    if player.human? && place == 7 || player.robot? && place == 13
       print_board
       puts "#{player} gets to go again!"
       move_pieces(player)
