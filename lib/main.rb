@@ -21,7 +21,7 @@ class Game
   attr_accessor :board, :presenter_board
 
   def initialize(p1, p2)
-    @board = [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0]
+    @board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
     @p1 = p1
     @p2 = p2
   end
@@ -33,6 +33,12 @@ class Game
 
   def game_over?
     @board.slice(0, 6).inject(&:+) == 0 || @board.slice(7, 14).inject(&:+) == 0
+  end
+
+  def empty_pit?
+  end
+
+  def check_for_empty_pit
   end
 
   def who_won?
